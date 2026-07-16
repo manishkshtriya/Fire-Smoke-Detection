@@ -71,14 +71,10 @@ python run.py
 ## Environment Variables
 
 ``` env
-SECRET_KEY=your_secret_key
+
 ALERT_EMAIL=your_email@gmail.com
 ALERT_EMAIL_PASS=your_app_password
-RECEIVER_EMAIL=receiver@gmail.com
 
-ADMIN_USER=your_admin_username
-ADMIN_EMAIL=your_admin_email
-ADMIN_PASS=your_secure_password
 ```
 
 ## Future Improvements
