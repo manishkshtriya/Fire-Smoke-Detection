@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title">Live Camera Feed</h4>
+        <img src="{{ url_for('main.video_feed') }}" class="img-fluid rounded" alt="Live feed">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title">Overview</h4>
+        <div class="list-group">
+          <div class="list-group-item">Total Detections: {{ stats.total_detections }}</div>
+          <div class="list-group-item">Today's Detections: {{ stats.today_detections }}</div>
+          <div class="list-group-item">Fire Count: {{ stats.fire_count }}</div>
+          <div class="list-group-item">Smoke Count: {{ stats.smoke_count }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm mt-4">
+  <div class="card-body">
+    <h4 class="card-title">Recent Detections</h4>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr><th>Time</th><th>Type</th><th>Confidence</th><th>Camera</th><th>Snapshot</th></tr>
+        </thead>
+        <tbody>
+          {% for item in recent_detections %}
+          <tr>
+            <td>{{ item.timestamp }}</td>
+            <td>{{ item.class_name }}</td>
+            <td>{{ item.confidence }}</td>
+            <td>{{ item.camera_name }}</td>
+            <td>{% if item.image_path %}<a href="{{ url_for('static', filename=item.image_path) }}" target="_blank">View</a>{% endif %}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-muted">No detections recorded yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

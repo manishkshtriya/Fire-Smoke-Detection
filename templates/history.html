@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h4 class="card-title">Detection History</h4>
+    <form class="row g-2 mb-3" method="get">
+      <div class="col-md-8">
+        <input class="form-control" type="text" name="q" value="{{ query }}" placeholder="Search by type..." />
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr><th>Time</th><th>Type</th><th>Confidence</th><th>Camera</th><th>Snapshot</th></tr>
+        </thead>
+        <tbody>
+          {% for item in detections %}
+          <tr>
+            <td>{{ item.timestamp }}</td>
+            <td>{{ item.class_name }}</td>
+            <td>{{ item.confidence }}</td>
+            <td>{{ item.camera_name }}</td>
+            <td>{% if item.image_path %}<a href="{{ url_for('static', filename=item.image_path) }}" target="_blank">View</a>{% endif %}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="text-muted">No history available.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if pagination.pages > 1 %}
+    <nav>
+      <ul class="pagination">
+        {% if pagination.has_prev %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('main.history', q=query, page=pagination.prev_num) }}">Previous</a></li>
+        {% endif %}
+        {% for p in range(1, pagination.pages + 1) %}
+        <li class="page-item {% if p == pagination.page %}active{% endif %}"><a class="page-link" href="{{ url_for('main.history', q=query, page=p) }}">{{ p }}</a></li>
+        {% endfor %}
+        {% if pagination.has_next %}
+        <li class="page-item"><a class="page-link" href="{{ url_for('main.history', q=query, page=pagination.next_num) }}">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
