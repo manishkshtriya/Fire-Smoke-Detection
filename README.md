@@ -93,6 +93,7 @@ MIT License
 ## Author
 
 **Prajwal B T**
+**Manish M P**
 
 GitHub: https://github.com/badivana LinkedIn:
 https://linkedin.com/in/prajwalbadivana
